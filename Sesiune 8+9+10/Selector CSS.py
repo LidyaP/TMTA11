@@ -25,7 +25,7 @@ chrome.find_element(By.CSS_SELECTOR, 'input#name').send_keys('Cristina')    #am 
 sleep(2)
 chrome.find_element(By.CSS_SELECTOR, 'input.form-control').send_keys(' Dumitru')       #am cautat dupa clasa
 sleep(2)
-chrome.find_element(By.CSS_SELECTOR, 'input[placeholder = "MM/DD/YYYY"').send_keys('14/12/2023')    # am cautat dupa placeholder
+chrome.find_element(By.CSS_SELECTOR, 'input[placeholder = "MM/DD/YYYY"]').send_keys('14/12/2023')    # am cautat dupa placeholder
 sleep(2)
 chrome.find_element(By.ID, 'logo').click()
 sleep(2)

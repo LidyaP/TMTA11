@@ -146,14 +146,14 @@
 #                                                         # executata instructiunea de raise
 # Prin folosirea raise programul semnaleaza explicit ca se afla intr-o situatie exceptionala, unde nota studentului
 # este considerata prea mica. Functia raise este utilizata in general doar de programatori.from
-
+#
 # DEBUGGING  - reprezinta procesul de analiza a codului prin care putem sa observam cum circula datele prin intermediul caruia
 # putem sa identificam potentialele probleme. Pentru a face debugging trebuie sa punem un break point in locul unde vrem sa vedem
 # cum circula datele. Se pot pune multiple break-pointuri. Un break point este un loc unde codul se opreste inainte sa execute urmatoarea
 # instructiune.
 # Ca sa punem un break point dam click pe marginea din stanga a fisierului intre cifre si marginea fisierului
 # Dupa ce am pus break point-ul de care avem nevoie dam click dreapta si "Debug"
-
+#
 # Ex.
 lista_masini = ["Audi","Skoda", "Ferrai", "Trabant", "Dacia", "Mustang", "Mercedes", "Tesla"]
 i = 0
