@@ -20,7 +20,7 @@ s = Service(ChromeDriverManager().install())
 chrome = webdriver.Chrome(service=s)
 
 chrome.maximize_window()
-# chrome.get("https://www.elefant.ro/")
+chrome.get("https://www.elefant.ro/")
 # cookies_accept = WebDriverWait(chrome, 10).until(
 #     EC.visibility_of_element_located((By.ID, "CybotCookiebotDialogBodyLevelButtonLevelOptinAllowAll"))
 # )
@@ -45,6 +45,22 @@ chrome.maximize_window()
 # product_result = chrome.find_elements(By.CSS_SELECTOR, '.product-title')
 # assert len(product_result) >= 10, "Error, the search did not return enough results"
 # sleep(2)
+chrome.find_element(By.CSS_SELECTOR, 'input[name = "SearchTerm"').send_keys('iphone 14')
+sleep(3)
+chrome.find_element(By.CSS_SELECTOR, 'button[name = "search"').click()
+sleep(2)
+
+rez=chrome.find_elements(By.CLASS_NAME,'product-title')
+print(len(rez))
+returned_result = chrome.find_element(By.CSS_SELECTOR, 'div[class = "hidden-sm element-count text-nowrap"').text
+print(returned_result)
+minim ='250'
+if returned_result>minim:
+    print(f'nr de prod gasite este in intervalul ok')
+else:
+    print(f'nr de prod gasite este prea mic')
+
+
 
 # - Test 3: Cautati un produs care nu exista si verifica faptul ca mesajul returnat este: "NE PARE RĂU, NU EXISTĂ PRODUSE ÎN ACEASTĂ CATEGORIE."
 # search_box = chrome.find_element(By.XPATH, '//div[@class="row"]//input[@name="SearchTerm"]')

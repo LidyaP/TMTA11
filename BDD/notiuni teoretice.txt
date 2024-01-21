@@ -1,0 +1,164 @@
+1. TDD:
+Este prescurtare de Test Driven Development si este un proces de dezvoltare software care se bazeaza pe transformarea cerintelor de business in
+teste inainte de a aveat codul sursa dezvoltat.
+Procesele TDD constau in :
+1. Red - se scrie un test sau mai multe care sa esueze initial, deoarece codul functional inca nu exista
+2. Greeen - scrierea codului functional pentru a face testul sa treaca cu succes
+3. Refactor : optimizare si curatare a codului
+
+Logica activitatilor in TDD :
+- se scriu testele automate - se foloseste un framework de testare cum ar fi unittest sau pytest in Python sau JUnit in Java
+- seruleaza testele automate (acestea vor fi in failed)
+- se scrie codul sursa pe baza testelor automate care au fost scrise anterior
+- se refactorizeaza si se ruleaza testele automate ( testele vor fi in passed)
+- in cazul in care sunt teste in faild se refactorizeaza codul si se repeta testele pana cand acestea vor fi toate in passed
+
+import unittest
+
+1. Faza RED
+
+class TestNumber(unittest.TestCase)
+
+    def test_add_two_numbers(self)
+        result = add_number(2, 3)
+        self.assertEqual(result, 5)
+
+2. faza GREEN
+
+    def add_numbers(a, b)
+        return a+b
+
+3. faza Refactor
+    def add_numbers(a, b)
+        return a+b
+
+Avantajele TDD:
+- se face dezvoltarea pe baza testelor si vom avea un nivel de acoperire si claritate mai mare a codului
+- se primesc rezultatele mult mai devreme in procesul de dezvoltare
+- se poate modifica codul mai usor prin facptul ca vom observat problemele pe masura ce acesta este scris
+- testele devin o forma de documentatie a functionalitatilor.
+
+
+2. BDD
+Este o metodologie de dezvoltare software care pune accent pe colaborararea intre membrii echipei si utilizeaza un
+limbaj comun pentru a descrie comportamentul sistemului. BDD are la baza conceptul TDD
+
+Logica activitatilor BDD:
+- se scriu scenariile de business care trebuie implementate
+- se scriu testele automate pornind de la scenariile de busines (use case-uri) . Pentru definirea testelor se foloseste formatul Gherkin
+iar ca framework de testare in Python avem framework-ul Behave (Cucumber)
+
+
+
+Gherkin
+este un limbaj specific frameworkului Cucumber/Behave , este un limbaj simplu si usor de inteles folosit pentru a descrie
+comportamentul sistemelor sofware
+
+1. Sintaxa pentru a incepe un scenariu este Scenario - este un context in care se specifica cum ar trebui sa se comporte
+sistemul intr-o anumita situatie
+
+Ex.
+Scenario : Descrierea scenariului
+    Given Sunt admin
+    When dau click dreapta
+    Then vreau sa pot da copy
+
+Scenario : Adunarea a doua numere
+    Given Am doua numere 2 si 3
+    When Le adun
+    Then Obtin rezultatul 5
+
+2. Argumentele (Given, When, Then)
+Given : Starea initiala sau preconditia. De obicei incepe cu "Am" sau "Exista"
+When :  Actiunea care declanseaza comportamentul. De obicei incepe cu "Cand"
+Then : rezultatul asteptat. De obicei incepe cu "Apoi"
+
+Ex.
+Given : Am deschis aplicatia
+When : Apas butonul de conectare
+Then : Ar trebui sa vad ecranul de conectare
+
+3. date de test ( Scenario Outline) - permite executarea aceluias scenariu cu diferite seturi de date
+
+Scenario Outline : Adunarea a doua numere
+    Given : Am doua numere <num1> si <num2>
+    When : le adun
+    Then : Obtin rezultatul <rezultat>
+
+    | num1  | num2 | rezultat |
+    | 2     | 3    | 5        |
+    | 5     | 7    | 12       |
+
+4. Tag-uri (Etichete)
+Etichetele se adauga cu @ si sunt folosite pentru a grupa si executa anumite scenarii sau functionalitati
+Taguri de genul : @teste pozitive, @T1, etc
+
+Ex.
+    @T1
+Given : Am deschis aplicatia
+When : Apas butonul de conectare
+Then : Ar trebui sa vad ecranul de conectare
+
+Structura de fisiere :
+
+Proiectul (BDD)
+    - features //
+        - exemple.feature
+    - steps //
+        - exemple_steps.py
+    - pages/
+        - exemple_page.py
+    environment.py
+
+
+ 1. Feature files - in feature o sa punem o descriere a functionalitatiilor pe care o testam in fisierul curent.
+ Este echivalentul unui Epic din Jira. In general inglobeaza mai multe teste pe care le putem face pt aceasi functionalitate
+ la scriere se utilizeaza limbajul gherkin
+
+Given : Am deschis aplicatia
+When : Apas butonul de conectare
+Then : Ar trebui sa vad ecranul de conectare
+
+ 2. Fisierele de tip pages sunt implementate pe baza unui pattern num POM. Fisierele de pages sunt cele pe baza carora se implemnteaza design pattern-ul
+ de page object model. Fisierele pages contin classe, constante, varibile, metode, selectori etc. actiunile pe care le putem face intr-o
+ pagina web. Fiecare fisier de tip pages va implementa o pagina dintr-un site.
+
+ cod-ul pt teste (cum am facut si la unittest)
+
+ 3. Fisierele de tip steps - sunt implementarea tehinica ca fisierelor de future files. Legarea intre ele se face in felul urmator :
+
+ - la rularea testelor se citeste mai intai pasul din feature file
+ - pe baza textului din acel pas de feature file se cauta corenspondenta in fisierul steps
+ - atunci cand este identificat este executata metoda care este apelata in acel step pe baza unui element context implementat in environment
+
+
+Ex.
+from behave import given, when, then
+from pages.exemple_page import ExamplePage
+
+
+@given('Am deschis aplicatia')
+def step_impl(context):
+    context.exemple_page = ExamplePage(context.chrome)
+
+@when('Apas butonul de conectare')
+def step_impl(context):
+    context.exemple_page = ExamplePage(context.chrome)
+
+@then('Ar trebui sa vad ecranul de conectare')
+def step_impl(context):
+    context.exemple_page = ExamplePage(context.chrome)
+
+
+
+POM:
+Page Object Model este un model de proiectare in testarea automata a interactiuni cu interfata utilizatorului.
+Scopul principal este sa ofere o structura organizata pentru a gestion interactiunile cu elementele unei pagini web sau a unei aplicatii
+BDD se bazeaza pe ceea ce se numeste POM (mai este cunoscut ca si design pattern) si care a fost implementat pentru gruparea tuturor
+elementelor dintr-o pagina web intr-un singur fisier python.
+
+un design pattern este un tipar de definire a codului.
+
+
+
+
